@@ -204,6 +204,16 @@
 		fetchData().catch((err) => logger.error('Facet change error:', err));
 	}
 
+	/** Same box for every facet capsule. Mobile shares the screen width; wider screens use the longest label. */
+	function facetClass(active: boolean) {
+		return (
+			'flex h-7 w-full min-w-0 items-center justify-center gap-1 whitespace-nowrap rounded-full px-1 text-[11px] font-medium transition-colors sm:gap-1.5 sm:px-3 sm:text-xs ' +
+			(active
+				? 'bg-primary-500 text-white'
+				: 'bg-surface-500/10 text-(--admin-text-muted) hover:bg-surface-500/20 dark:text-(--admin-text-muted)')
+		);
+	}
+
 	function openUserSessions(targetUser: User) {
 		modalState.trigger(ModalUserSessions as any, { user: targetUser }, () => {});
 	}
@@ -840,21 +850,21 @@
 	}
 </script>
 
-<AdminCard data-testid="user-admin-area" class="flex flex-col">
-	<!-- Header: Tabs + Invite button -->
-	<div class="flex items-center justify-between gap-3 px-4 pt-3">
-		<div
-			class="flex border-b border-(--admin-border-default) grow"
-			role="tablist"
-			aria-label={useradmin_views_aria()}
-		>
+<AdminCard data-testid="user-admin-area" class="flex min-w-0 max-w-full flex-col">
+	<!-- Header: Tabs + Invite button. The rule is on the whole row so it
+	     does not stop before Invite User. -->
+	<div
+		class="flex w-full min-w-0 items-center justify-between gap-2 border-b border-(--admin-border-default) px-2 pt-3 sm:gap-3 sm:px-4"
+		data-testid="user-admin-header"
+	>
+		<div class="flex min-w-0 grow" role="tablist" aria-label={useradmin_views_aria()}>
 			<button
 				type="button"
 				role="tab"
 				aria-selected={showUserList}
 				data-testid="admin-tab-users"
 				onclick={() => showView('users')}
-				class="flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors {showUserList
+				class="flex items-center gap-1 px-2 py-3 text-sm font-medium border-b-2 -mb-px transition-colors sm:gap-1.5 sm:px-4 {showUserList
 					? 'border-primary-500 text-primary-600 dark:text-primary-500'
 					: 'border-transparent text-(--admin-text-muted) hover:text-(--admin-text-muted) dark:hover:text-(--admin-text-muted)'}"
 			>
@@ -868,7 +878,7 @@
 				aria-selected={showUsertoken}
 				data-testid="admin-tab-tokens"
 				onclick={() => showView('tokens')}
-				class="flex items-center gap-1.5 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors {showUsertoken
+				class="flex items-center gap-1 px-2 py-3 text-sm font-medium border-b-2 -mb-px transition-colors sm:gap-1.5 sm:px-4 {showUsertoken
 					? 'border-primary-500 text-primary-600 dark:text-primary-500'
 					: 'border-transparent text-(--admin-text-muted) hover:text-(--admin-text-muted) dark:hover:text-(--admin-text-muted)'}"
 			>
@@ -883,14 +893,15 @@
 			aria-label={adminarea_emailtoken()}
 			data-testid="email-registration-token-btn"
 			leadingIcon="material-symbols:mail"
+			class="shrink-0 whitespace-nowrap"
 		>
 			{useradmin_invite_user()}
 		</Button>
 	</div>
 
 	<!-- Toolbar -->
-	<div class="{SMART_TABLE_TOOLBAR} relative z-30">
-		<div class="order-3 flex items-center gap-2 sm:order-2">
+	<div class="{SMART_TABLE_TOOLBAR} relative z-30 max-sm:my-2 max-sm:px-2">
+		<div class="order-3 flex w-full min-w-0 items-center justify-between sm:order-2 sm:w-auto sm:justify-start sm:gap-2">
 			<TableFilter
 				bind:globalSearchValue
 				bind:searchShow
@@ -918,67 +929,62 @@
 	</div>
 
 	{#if showUserList}
-		<!-- Facet Chips -->
-		<div class="flex flex-wrap items-center gap-1.5 px-3 py-1.5 text-xs">
-			<button
-				type="button"
-				onclick={() => selectFacet('all')}
-				class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium transition-colors {activeFacet ===
-				'all'
-					? 'bg-primary-500 text-white'
-					: 'bg-surface-500/10 text-(--admin-text-muted) hover:bg-surface-500/20 dark:text-(--admin-text-muted)'}"
+		<!-- Facet capsules share one size and stay inside the phone width. -->
+		<div class="w-full min-w-0 px-2 py-1.5 sm:px-3">
+			<div
+				class="grid w-full grid-cols-5 gap-1 sm:inline-grid sm:w-max sm:grid-cols-none sm:auto-cols-[1fr] sm:grid-flow-col sm:gap-1.5"
+				data-testid="user-facet-row"
 			>
-				<span>{useradmin_all()}</span>
-				<span class="opacity-70">({systemUserCount})</span>
-			</button>
-			<button
-				type="button"
-				onclick={() => selectFacet('admin')}
-				class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium transition-colors {activeFacet ===
-				'admin'
-					? 'bg-primary-500 text-white'
-					: 'bg-surface-500/10 text-(--admin-text-muted) hover:bg-surface-500/20 dark:text-(--admin-text-muted)'}"
-			>
-				<iconify-icon
-					icon="mdi:shield-crown-outline"
-					width="14"
-					class="text-tertiary-500 dark:text-primary-400"
-				></iconify-icon>
-				<span>{useradmin_admins()}</span>
-			</button>
-			<button
-				type="button"
-				onclick={() => selectFacet('user')}
-				class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium transition-colors {activeFacet ===
-				'user'
-					? 'bg-primary-500 text-white'
-					: 'bg-surface-500/10 text-(--admin-text-muted) hover:bg-surface-500/20 dark:text-(--admin-text-muted)'}"
-			>
-				<iconify-icon icon="mdi:account-outline" width="14"></iconify-icon>
-				<span>{useradmin_users()}</span>
-			</button>
-			<button
-				type="button"
-				onclick={() => selectFacet('active')}
-				class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium transition-colors {activeFacet ===
-				'active'
-					? 'bg-primary-500 text-white'
-					: 'bg-surface-500/10 text-(--admin-text-muted) hover:bg-surface-500/20 dark:text-(--admin-text-muted)'}"
-			>
-				<span class="size-1.5 rounded-full bg-success-500"></span>
-				<span>{useradmin_active()}</span>
-			</button>
-			<button
-				type="button"
-				onclick={() => selectFacet('blocked')}
-				class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-medium transition-colors {activeFacet ===
-				'blocked'
-					? 'bg-primary-500 text-white'
-					: 'bg-surface-500/10 text-(--admin-text-muted) hover:bg-surface-500/20 dark:text-(--admin-text-muted)'}"
-			>
-				<span class="size-1.5 rounded-full bg-error-500"></span>
-				<span>{useradmin_blocked()}</span>
-			</button>
+				<button
+					type="button"
+					onclick={() => selectFacet('all')}
+					data-testid="facet-all"
+					class={facetClass(activeFacet === 'all')}
+				>
+					<span>{useradmin_all()}</span>
+					<span class="opacity-70">({systemUserCount})</span>
+				</button>
+				<button
+					type="button"
+					onclick={() => selectFacet('admin')}
+					data-testid="facet-admin"
+					class={facetClass(activeFacet === 'admin')}
+				>
+					<iconify-icon
+						icon="mdi:shield-crown-outline"
+						width="14"
+						class="hidden shrink-0 text-tertiary-500 sm:inline-block dark:text-primary-400"
+					></iconify-icon>
+					<span>{useradmin_admins()}</span>
+				</button>
+				<button
+					type="button"
+					onclick={() => selectFacet('user')}
+					data-testid="facet-user"
+					class={facetClass(activeFacet === 'user')}
+				>
+					<iconify-icon icon="mdi:account-outline" width="14" class="hidden shrink-0 sm:inline-block"></iconify-icon>
+					<span>{useradmin_users()}</span>
+				</button>
+				<button
+					type="button"
+					onclick={() => selectFacet('active')}
+					data-testid="facet-active"
+					class={facetClass(activeFacet === 'active')}
+				>
+					<span class="size-1.5 shrink-0 rounded-full bg-success-500"></span>
+					<span>{useradmin_active()}</span>
+				</button>
+				<button
+					type="button"
+					onclick={() => selectFacet('blocked')}
+					data-testid="facet-blocked"
+					class={facetClass(activeFacet === 'blocked')}
+				>
+					<span class="size-1.5 shrink-0 rounded-full bg-error-500"></span>
+					<span>{useradmin_blocked()}</span>
+				</button>
+			</div>
 		</div>
 	{/if}
 
@@ -1019,6 +1025,7 @@
 	{/if}
 
 	<SmartTableShell
+		class="min-w-0"
 		empty={!tableData || tableData.length === 0}
 		emptyTitle={showUserList ? adminarea_nouser() : adminarea_notoken()}
 		emptyDescription={useradmin_empty_description()}

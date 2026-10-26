@@ -820,9 +820,9 @@
 		return help[key] ?? '';
 	}
 
-	/** Compact help control — same pattern as Security / Setup */
+	/** One help mark for every label on this page: 14px circle, color of the word beside it. */
 	const helpBtnClass =
-		'ms-0.5 shrink-0 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500';
+		'inline-flex size-3.5 shrink-0 items-center justify-center self-center border-0 bg-transparent p-0 leading-none shadow-none [appearance:none] text-current [&_iconify-icon]:!size-3.5';
 
 	const roleDisplay = $derived.by(() => {
 		const r = String(user.role).toLowerCase();
@@ -1013,7 +1013,7 @@
 	showBackButton={true}
 	backUrl="/config"
 >
-	<div in:fade={{ duration: 250 }} class="flex flex-col gap-2" data-testid="user-account-page">
+	<div in:fade={{ duration: 250 }} class="flex w-full min-w-0 flex-col gap-2" data-testid="user-account-page">
 		<!-- Tabs directly under PageTitle -->
 		<Tabs
 			tabs={accountTabs}
@@ -1080,17 +1080,21 @@
 								<!-- Shared height/width: white label text on filled chips -->
 								<span data-testid="user-role-badge" class="block w-full">
 									<span
-										class="inline-flex h-9 w-full items-center justify-center gap-1.5 rounded bg-primary-500 px-3 text-xs font-bold uppercase tracking-wide text-white"
+										class="flex h-9 w-full items-center gap-1.5 rounded bg-primary-500 px-3 text-xs font-bold uppercase tracking-wide text-white"
 									>
-										<iconify-icon icon={roleDisplay.icon} width={16} aria-hidden="true"
+										<iconify-icon
+											icon={roleDisplay.icon}
+											width={16}
+											class="shrink-0"
+											aria-hidden="true"
 										></iconify-icon>
-										{roleDisplay.name}
-										<SystemTooltip title={helpTitle('role')}>
+										<span class="min-w-0 flex-1 truncate text-start">{roleDisplay.name}</span>
+										<SystemTooltip title={helpTitle('role')} triggerClass="shrink-0">
 											<button
 												type="button"
 												tabindex="-1"
 												aria-label={userpage_help_role_aria()}
-												class="text-white/80 hover:text-white"
+												class={helpBtnClass}
 											>
 												<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 												></iconify-icon>
@@ -1100,16 +1104,18 @@
 								</span>
 								<span data-testid="user-id-badge" class="block w-full">
 									<span
-										class="inline-flex h-9 w-full items-center justify-center gap-1 rounded bg-tertiary-600 px-3 font-mono text-[11px] font-bold tracking-wide text-white dark:bg-tertiary-500"
+										class="flex h-9 w-full items-center gap-1.5 rounded bg-tertiary-600 px-3 font-mono text-[11px] font-bold tracking-wide text-white dark:bg-tertiary-500"
 										title={String(user._id)}
 									>
-										ID: {String(user._id).slice(0, 12)}…
-										<SystemTooltip title={helpTitle('id')}>
+										<span class="min-w-0 flex-1 truncate text-start"
+											>ID: {String(user._id).slice(0, 12)}…</span
+										>
+										<SystemTooltip title={helpTitle('id')} triggerClass="shrink-0">
 											<button
 												type="button"
 												tabindex="-1"
 												aria-label={userpage_help_id_aria()}
-												class="text-white/80 hover:text-white"
+												class={helpBtnClass}
 											>
 												<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 												></iconify-icon>
@@ -1120,16 +1126,18 @@
 								{#if isMultiTenant && user.tenantId}
 									<span data-testid="user-tenant-badge" class="block w-full">
 										<span
-											class="inline-flex h-9 w-full items-center justify-center gap-1 rounded-full bg-secondary-600 px-3 font-mono text-[11px] font-bold tracking-wide text-white"
+											class="flex h-9 w-full items-center gap-1.5 rounded-full bg-secondary-600 px-3 font-mono text-[11px] font-bold tracking-wide text-white"
 										>
-											{userpage_tenant()}
-											{String(user.tenantId).slice(0, 12)}…
-											<SystemTooltip title={helpTitle('tenant')}>
+											<span class="min-w-0 flex-1 truncate text-start"
+												>{userpage_tenant()}
+												{String(user.tenantId).slice(0, 12)}…</span
+											>
+											<SystemTooltip title={helpTitle('tenant')} triggerClass="shrink-0">
 												<button
 													type="button"
 													tabindex="-1"
 													aria-label={userpage_help_tenant_aria()}
-													class="text-white/80 hover:text-white"
+													class={helpBtnClass}
 												>
 													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
@@ -1146,7 +1154,7 @@
 										aria-label={user.is2FAEnabled
 											? userpage_2fa_manage_aria()
 											: userpage_2fa_setup_aria()}
-										class="inline-flex h-9 w-full cursor-pointer items-center justify-center gap-1.5 rounded-full px-3 text-xs font-bold uppercase tracking-wide text-white transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 {user.is2FAEnabled
+										class="flex h-9 w-full cursor-pointer items-center gap-1.5 rounded-full px-3 text-xs font-bold uppercase tracking-wide text-white transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 {user.is2FAEnabled
 											? 'bg-primary-600 dark:bg-primary-500'
 											: 'bg-warning-600 dark:bg-warning-500'}"
 									>
@@ -1164,17 +1172,17 @@
 						<!-- Right: username · email · password (static mask, no reveal) -->
 						<div class="flex min-w-0 flex-col gap-4">
 							<div
-								class="w-full rounded-(--admin-radius-input) border border-surface-500/30 px-4 py-3 dark:border-surface-500/40"
+								class="grid w-full grid-cols-[14px_minmax(0,1fr)] gap-x-1 rounded-(--admin-radius-input) border border-surface-500/30 px-4 py-3 dark:border-surface-500/40"
 							>
+								<iconify-icon
+									icon="mdi:account"
+									width={14}
+									class="self-center text-tertiary-500 dark:text-primary-500"
+									aria-hidden="true"
+								></iconify-icon>
 								<div
-									class="mb-1 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-(--admin-text-muted)"
+									class="mb-1 flex items-center gap-1 leading-none text-[10px] font-semibold uppercase tracking-wider text-(--admin-text-muted)"
 								>
-									<iconify-icon
-										icon="mdi:account"
-										width={14}
-										class="text-tertiary-500 dark:text-primary-500"
-										aria-hidden="true"
-									></iconify-icon>
 									{username()}
 									<SystemTooltip title={helpTitle('username')}>
 										<button
@@ -1189,7 +1197,7 @@
 									</SystemTooltip>
 								</div>
 								<p
-									class="w-full text-base font-medium text-(--admin-text-body)"
+									class="col-start-2 w-full text-base font-medium text-(--admin-text-body)"
 									data-testid="profile-username"
 								>
 									{user.username || '—'}
@@ -1197,17 +1205,17 @@
 							</div>
 
 							<div
-								class="w-full rounded-(--admin-radius-input) border border-surface-500/30 px-4 py-3 dark:border-surface-500/40"
+								class="grid w-full grid-cols-[14px_minmax(0,1fr)] gap-x-1 rounded-(--admin-radius-input) border border-surface-500/30 px-4 py-3 dark:border-surface-500/40"
 							>
+								<iconify-icon
+									icon="mdi:email-outline"
+									width={14}
+									class="self-center text-tertiary-500 dark:text-primary-500"
+									aria-hidden="true"
+								></iconify-icon>
 								<div
-									class="mb-1 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-(--admin-text-muted)"
+									class="mb-1 flex items-center gap-1 leading-none text-[10px] font-semibold uppercase tracking-wider text-(--admin-text-muted)"
 								>
-									<iconify-icon
-										icon="mdi:email-outline"
-										width={14}
-										class="text-tertiary-500 dark:text-primary-500"
-										aria-hidden="true"
-									></iconify-icon>
 									{email()}
 									<SystemTooltip title={helpTitle('email')}>
 										<button
@@ -1222,7 +1230,7 @@
 									</SystemTooltip>
 								</div>
 								<p
-									class="w-full break-all text-base font-medium text-(--admin-text-body)"
+									class="col-start-2 w-full break-all text-base font-medium text-(--admin-text-body)"
 									data-testid="profile-email"
 								>
 									{user.email || '—'}
@@ -1231,18 +1239,18 @@
 
 							<!-- Password never shown in plain text — use Change password only -->
 							<div
-								class="w-full rounded-(--admin-radius-input) border border-surface-500/30 px-4 py-3 dark:border-surface-500/40"
+								class="grid w-full grid-cols-[14px_minmax(0,1fr)] gap-x-1 rounded-(--admin-radius-input) border border-surface-500/30 px-4 py-3 dark:border-surface-500/40"
 								data-testid="profile-password-field"
 							>
+								<iconify-icon
+									icon="mdi:key-variant"
+									width={14}
+									class="self-center text-tertiary-500 dark:text-primary-500"
+									aria-hidden="true"
+								></iconify-icon>
 								<div
-									class="mb-1 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-(--admin-text-muted)"
+									class="mb-1 flex items-center gap-1 leading-none text-[10px] font-semibold uppercase tracking-wider text-(--admin-text-muted)"
 								>
-									<iconify-icon
-										icon="mdi:key-variant"
-										width={14}
-										class="text-tertiary-500 dark:text-primary-500"
-										aria-hidden="true"
-									></iconify-icon>
 									{form_password()}
 									<SystemTooltip title={helpTitle('password')}>
 										<button
@@ -1257,12 +1265,12 @@
 									</SystemTooltip>
 								</div>
 								<p
-									class="font-mono text-base tracking-widest text-(--admin-text-muted)"
+									class="col-start-2 font-mono text-base tracking-widest text-(--admin-text-muted)"
 									aria-hidden="true"
 								>
 									••••••••••••
 								</p>
-								<p class="mt-1 text-xs text-(--admin-text-muted)">
+								<p class="col-start-2 mt-1 text-xs text-(--admin-text-muted)">
 									{userpage_password_stored_prefix()}
 									<strong class="font-medium text-(--admin-text-muted)"
 										>{userpage_change_password()}</strong
@@ -1343,11 +1351,11 @@
 														type="button"
 														tabindex="-1"
 														aria-label={userpage_help_2fa_aria()}
-														class="ms-0.5 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500"
+														class={helpBtnClass}
 													>
 														<iconify-icon
 															icon="mdi:help-circle-outline"
-															width={16}
+															width={14}
 															aria-hidden="true"
 														></iconify-icon>
 													</button>
@@ -1392,9 +1400,9 @@
 													type="button"
 													tabindex="-1"
 													aria-label={userpage_help_passkeys_biometrics_aria()}
-													class="ms-0.5 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500"
+													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -1443,9 +1451,9 @@
 													type="button"
 													tabindex="-1"
 													aria-label={userpage_help_sessions_aria()}
-													class="ms-0.5 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500"
+													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -1583,12 +1591,12 @@
 														<li
 															class="flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-[11px] {member.isCurrent
 																? 'border border-primary-500/40 bg-primary-500/10 dark:border-primary-500/50 dark:bg-primary-500/10'
-																: 'border border-transparent bg-surface-500/80 dark:bg-surface-900/20'}"
+																: 'border border-transparent bg-surface-500/10 dark:bg-surface-900/20'}"
 															data-testid={member.isCurrent
 																? 'session-member-current'
 																: 'session-member'}
 														>
-															<span class="min-w-0 text-(--admin-text-muted)">
+															<span class="min-w-0 text-(--admin-text-body)">
 																{#if member.isCurrent}
 																	<span
 																		class="inline-flex items-center gap-1 font-bold text-primary-600 dark:text-primary-500"
@@ -1601,19 +1609,13 @@
 																		{userpage_current_this_tab()}
 																	</span>
 																{:else}
-																	<span class="font-medium text-(--admin-text-muted)"
-																		>{userpage_other_sign_in()}</span
-																	>
+																	<span class="font-medium">{userpage_other_sign_in()}</span>
 																{/if}
 																{#if sessionWhen(member)}
-																	<span class="text-(--admin-text-muted)">
-																		· {sessionWhen(member)}</span
-																	>
+																	<span>· {sessionWhen(member)}</span>
 																{/if}
 																{#if member.ip || member.ipAddress}
-																	<span class="font-mono text-(--admin-text-muted)">
-																		· {member.ip || member.ipAddress}</span
-																	>
+																	<span class="font-mono">· {member.ip || member.ipAddress}</span>
 																{/if}
 															</span>
 														</li>
@@ -1633,26 +1635,26 @@
 						</h3>
 						<div class="space-y-1">
 							<div class={rowClass} data-testid="pref-passkey">
-								<div class="flex min-w-0 items-center gap-3">
+								<div class="flex min-w-0 flex-1 items-center gap-3">
 									<iconify-icon
 										icon="mdi:fingerprint"
 										class={securityRowIcon}
 										width={20}
 										aria-hidden="true"
 									></iconify-icon>
-									<div class="min-w-0">
+									<div class="min-w-0 flex-1">
 										<div
-											class="flex items-center gap-1 text-sm font-medium text-(--admin-text-body)"
+											class="flex w-full items-center gap-1 text-sm font-medium text-(--admin-text-body)"
 										>
 											{userpage_passkeys()}
-											<SystemTooltip title={helpTitle('passkeys')}>
+											<SystemTooltip title={helpTitle('passkeys')} triggerClass="ms-auto shrink-0">
 												<button
 													type="button"
 													tabindex="-1"
 													aria-label={userpage_help_passkeys_aria()}
-													class="ms-0.5 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500"
+													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -1670,26 +1672,26 @@
 							</div>
 
 							<div class={rowClass} data-testid="pref-magic-link">
-								<div class="flex min-w-0 items-center gap-3">
+								<div class="flex min-w-0 flex-1 items-center gap-3">
 									<iconify-icon
 										icon="mdi:magic-staff"
 										class={securityRowIcon}
 										width={20}
 										aria-hidden="true"
 									></iconify-icon>
-									<div class="min-w-0">
+									<div class="min-w-0 flex-1">
 										<div
-											class="flex items-center gap-1 text-sm font-medium text-(--admin-text-body)"
+											class="flex w-full items-center gap-1 text-sm font-medium text-(--admin-text-body)"
 										>
 											{userpage_magic_link()}
-											<SystemTooltip title={helpTitle('magic')}>
+											<SystemTooltip title={helpTitle('magic')} triggerClass="ms-auto shrink-0">
 												<button
 													type="button"
 													tabindex="-1"
 													aria-label={userpage_help_magic_aria()}
-													class="ms-0.5 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500"
+													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -1707,26 +1709,26 @@
 							</div>
 
 							<div class={rowClass} data-testid="pref-oauth">
-								<div class="flex min-w-0 items-center gap-3">
+								<div class="flex min-w-0 flex-1 items-center gap-3">
 									<iconify-icon
 										icon="mdi:account-group-outline"
 										class={securityRowIcon}
 										width={20}
 										aria-hidden="true"
 									></iconify-icon>
-									<div class="min-w-0">
+									<div class="min-w-0 flex-1">
 										<div
-											class="flex items-center gap-1 text-sm font-medium text-(--admin-text-body)"
+											class="flex w-full items-center gap-1 text-sm font-medium text-(--admin-text-body)"
 										>
 											{userpage_oauth_login()}
-											<SystemTooltip title={helpTitle('oauth')}>
+											<SystemTooltip title={helpTitle('oauth')} triggerClass="ms-auto shrink-0">
 												<button
 													type="button"
 													tabindex="-1"
 													aria-label={userpage_help_oauth_aria()}
-													class="ms-0.5 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500"
+													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -1763,9 +1765,9 @@
 													type="button"
 													tabindex="-1"
 													aria-label={userpage_help_permissions_aria()}
-													class="ms-0.5 text-(--admin-text-muted) hover:text-tertiary-500 dark:hover:text-primary-500"
+													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -1829,7 +1831,7 @@
 												aria-label={userpage_help_appearance_aria()}
 												class={helpBtnClass}
 											>
-												<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+												<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 												></iconify-icon>
 											</button>
 										</SystemTooltip>
@@ -1980,7 +1982,7 @@
 												aria-label={userpage_help_collaboration_aria()}
 												class={helpBtnClass}
 											>
-												<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+												<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 												></iconify-icon>
 											</button>
 										</SystemTooltip>
@@ -2000,7 +2002,7 @@
 													aria-label={userpage_help_rtc_aria()}
 													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -2023,7 +2025,7 @@
 													aria-label={userpage_help_rtc_sound_aria()}
 													class={helpBtnClass}
 												>
-													<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+													<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 													></iconify-icon>
 												</button>
 											</SystemTooltip>
@@ -2063,7 +2065,7 @@
 												aria-label={userpage_help_privacy_aria()}
 												class={helpBtnClass}
 											>
-												<iconify-icon icon="mdi:help-circle-outline" width={16} aria-hidden="true"
+												<iconify-icon icon="mdi:help-circle-outline" width={14} aria-hidden="true"
 												></iconify-icon>
 											</button>
 										</SystemTooltip>

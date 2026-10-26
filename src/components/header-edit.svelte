@@ -368,7 +368,7 @@
 		document.dispatchEvent(new CustomEvent('cancelEdit', { bubbles: true }));
 		setCollectionValue({});
 		ui.toggle('rightSidebar', 'hidden');
-		ui.toggle('leftSidebar', isDesktop ? 'full' : 'collapsed');
+		ui.toggle('leftSidebar', screen.isTablet ? 'collapsed' : 'full');
 		ui.toggle('pageheader', 'hidden');
 		navigationManager.toList();
 	}
@@ -427,7 +427,7 @@
 		{#if ui.state.leftSidebar === 'hidden'}
 			<Button
 				variant="outline"
-				onclick={() => ui.toggle('leftSidebar', isDesktop ? 'full' : 'collapsed')}
+				onclick={() => ui.toggle('leftSidebar', screen.isTablet ? 'collapsed' : 'full')}
 				aria-label="Toggle sidebar"
 				class="p-0! min-w-0 shrink-0"
 			>

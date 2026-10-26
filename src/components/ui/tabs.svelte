@@ -74,13 +74,18 @@
 	}
 </script>
 
-<div class="w-full" data-testid={testId}>
+<div
+	class="w-full {variant === 'underline' ? 'border-b-2 border-solid border-black dark:border-white' : ''}"
+	data-testid={testId}
+>
 	<div
 		role="tablist"
 		aria-label={ariaLabel}
-		class="flex gap-2 {variant === 'pills'
-			? 'p-1 bg-(--admin-bg-card) rounded-xl'
-			: ''} overflow-x-auto overflow-y-clip"
+		class="flex w-full {variant === 'pills'
+			? 'gap-2 p-1 bg-(--admin-bg-card) rounded-xl'
+			: variant === 'underline'
+				? 'gap-0.5 overflow-visible sm:gap-2'
+				: 'gap-2'} {variant === 'underline' ? '' : 'overflow-x-auto'}"
 	>
 		{#each tabs as tab, i (tab.id)}
 			<!-- Underline tabs are chrome-free; `ghost` paints a dark-mode fill behind each tab -->
@@ -93,18 +98,18 @@
 				onclick={() => handleTabClick(tab.id)}
 				onkeydown={(e: KeyboardEvent) => handleKeyDown(e, i)}
 				data-testid="tab-{tab.id}"
-				class="flex items-center gap-2.5 whitespace-nowrap px-4 py-3 text-sm font-medium transition-all duration-200 {variant ===
+				class="flex min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap px-2 py-3 text-sm font-medium transition-all duration-200 sm:gap-2.5 sm:px-4 {variant ===
 				'pills'
-					? 'rounded-lg! ' +
+					? 'rounded-lg! flex-none ' +
 						(activeTab === tab.id
 							? 'bg-white dark:bg-surface-700 shadow-sm text-(--admin-text-body)'
 							: 'text-surface-500 hover:text-surface-600 dark:hover:text-surface-400')
 					: variant === 'underline'
-						? 'rounded-none! border-b-2 ' +
+						? 'rounded-none! border-0 bg-transparent shadow-none ' +
 							(activeTab === tab.id
-								? 'border-tertiary-500 text-tertiary-600 dark:border-primary-500 dark:text-primary-500'
-								: 'border-transparent text-surface-500 hover:text-surface-600 dark:hover:text-surface-400 hover:border-surface-500/30')
-						: 'rounded-lg! ' +
+								? 'relative text-tertiary-600 after:absolute after:inset-x-0 after:-bottom-0.5 after:z-10 after:h-0.5 after:bg-tertiary-500 after:content-[\'\'] dark:text-primary-500 dark:after:bg-primary-500'
+								: 'text-surface-500 hover:text-surface-600 dark:hover:text-surface-400')
+						: 'rounded-lg! flex-none ' +
 							(activeTab === tab.id
 								? 'bg-tertiary-500/10 text-tertiary-600 dark:bg-primary-900/20 dark:text-primary-400'
 								: 'text-surface-500 hover:text-surface-600 dark:hover:text-surface-400')}"
