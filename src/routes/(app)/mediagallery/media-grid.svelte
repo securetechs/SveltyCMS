@@ -11,6 +11,7 @@
 -->
 
 <script lang="ts">
+	import AdminCard from '@components/admin-card.svelte';
 	import Button from '@components/ui/button.svelte';
 	import {
 		button_edit,
@@ -241,40 +242,42 @@
 >
 	{#if filteredFiles.length === 0}
 		<div
-			class="col-span-full flex min-h-full flex-col items-center justify-center gap-3 py-16 text-center"
+			class="col-span-full"
 			transition:adminFade={{ duration: 200 }}
 			data-testid="media-grid-empty"
 		>
-			<iconify-icon icon="mdi:cloud-upload-outline" width="48" class="text-(--admin-text-muted)"
-			></iconify-icon>
-			<div class="space-y-1">
-				<h3 class="text-base font-semibold">{mediagallery_no_media()}</h3>
-				<p class="max-w-xs text-sm text-(--admin-text-muted)">
-					{mediagallery_drop_files()}
-				</p>
-			</div>
+			<AdminCard class="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
+				<iconify-icon icon="mdi:cloud-upload-outline" width="48" class="text-(--admin-text-muted)"
+				></iconify-icon>
+				<div class="space-y-1">
+					<h3 class="text-base font-semibold">{mediagallery_no_media()}</h3>
+					<p class="mx-auto max-w-md text-sm text-(--admin-text-muted)">
+						{mediagallery_drop_files()}
+					</p>
+				</div>
 
-			<Button variant="tertiary" onclick={() => fileUploadInput?.click()}>
-				<iconify-icon icon="mdi:plus" width="18"></iconify-icon>
-				<span>{mediagallery_upload_first()}</span>
-			</Button>
-			<input
-				aria-label={mediagallery_filter_media_aria()}
-				type="file"
-				multiple
-				class="hidden"
-				bind:this={fileUploadInput}
-				onchange={(e) => {
-					const input = e.target as HTMLInputElement;
-					if (input.files?.length) {
-						const event = new CustomEvent('externalUpload', {
-							detail: { files: input.files }
-						});
-						document.dispatchEvent(event);
-					}
-				}}
-				accept="image/*,video/*,audio/*,application/pdf"
-			/>
+				<Button variant="primary" onclick={() => fileUploadInput?.click()}>
+					<iconify-icon icon="mdi:plus" width="18"></iconify-icon>
+					<span>{mediagallery_upload_first()}</span>
+				</Button>
+				<input
+					aria-label={mediagallery_filter_media_aria()}
+					type="file"
+					multiple
+					class="hidden"
+					bind:this={fileUploadInput}
+					onchange={(e) => {
+						const input = e.target as HTMLInputElement;
+						if (input.files?.length) {
+							const event = new CustomEvent('externalUpload', {
+								detail: { files: input.files }
+							});
+							document.dispatchEvent(event);
+						}
+					}}
+					accept="image/*,video/*,audio/*,application/pdf"
+				/>
+			</AdminCard>
 		</div>
 	{:else}
 		{#each visibleFiles as file (file._id || file.filename)}

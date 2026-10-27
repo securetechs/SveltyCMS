@@ -180,9 +180,7 @@
 				data-testid="queue-stat-total"
 				data-preload="hover"
 			>
-				<AdminCard
-					class="p-4 border border-(--admin-border-default) bg-(--admin-bg-card,var(--color-surface-50)) dark:bg-surface-900/20 backdrop-blur-md shadow-xs hover:border-tertiary-500 dark:hover:border-primary-500 transition-colors"
-				>
+				<AdminCard class="p-4 transition-colors">
 					<div class="flex items-center gap-3">
 						<div class="p-2 rounded bg-surface-200 dark:bg-surface-700">
 							<iconify-icon icon="mdi:format-list-bulleted" class="text-2xl"></iconify-icon>
@@ -204,9 +202,7 @@
 				data-testid="queue-stat-pending"
 				data-preload="hover"
 			>
-				<AdminCard
-					class="p-4 border border-(--admin-border-default) bg-(--admin-bg-card,var(--color-surface-50)) dark:bg-surface-900/20 backdrop-blur-md shadow-xs hover:border-surface-500 transition-colors"
-				>
+				<AdminCard class="p-4 transition-colors">
 					<div class="flex items-center gap-3">
 						<div class="p-2 rounded bg-surface-500/10 text-surface-600 dark:text-surface-400">
 							<iconify-icon icon="mdi:clock-outline" class="text-2xl"></iconify-icon>
@@ -226,9 +222,7 @@
 				data-testid="queue-stat-running"
 				data-preload="hover"
 			>
-				<AdminCard
-					class="p-4 border border-(--admin-border-default) bg-(--admin-bg-card,var(--color-surface-50)) dark:bg-surface-900/20 backdrop-blur-md shadow-xs hover:border-tertiary-500 dark:hover:border-primary-500 transition-colors"
-				>
+				<AdminCard class="p-4 transition-colors">
 					<div class="flex items-center gap-3">
 						<div class="p-2 rounded bg-primary-500/10 text-primary-500 dark:text-primary-400">
 							<iconify-icon icon="mdi:loading" class="text-2xl"></iconify-icon>
@@ -248,9 +242,7 @@
 				data-testid="queue-stat-completed"
 				data-preload="hover"
 			>
-				<AdminCard
-					class="p-4 border border-(--admin-border-default) bg-(--admin-bg-card,var(--color-surface-50)) dark:bg-surface-900/20 backdrop-blur-md shadow-xs hover:border-success-500 transition-colors"
-				>
+				<AdminCard class="p-4 transition-colors">
 					<div class="flex items-center gap-3">
 						<div class="p-2 rounded bg-success-500/10 text-success-500 dark:text-success-400">
 							<iconify-icon icon="mdi:check-circle-outline" class="text-2xl"></iconify-icon>
@@ -272,9 +264,7 @@
 				data-testid="queue-stat-failed"
 				data-preload="hover"
 			>
-				<AdminCard
-					class="p-4 border border-(--admin-border-default) bg-(--admin-bg-card,var(--color-surface-50)) dark:bg-surface-900/20 backdrop-blur-md shadow-xs hover:border-error-500 transition-colors"
-				>
+				<AdminCard class="p-4 transition-colors">
 					<div class="flex items-center gap-3">
 						<div class="p-2 rounded bg-error-500/10 text-error-500 dark:text-error-400">
 							<iconify-icon icon="mdi:alert-circle-outline" class="text-2xl"></iconify-icon>
@@ -317,10 +307,7 @@
 		</div>
 
 		<div in:adminFade>
-			<AdminCard
-				class="p-0 border border-(--admin-border-default) bg-(--admin-bg-card,var(--color-surface-50)) dark:bg-surface-900/20 backdrop-blur-md shadow-xs overflow-hidden"
-				data-testid="queue-jobs-table"
-			>
+			<AdminCard class="p-0 overflow-hidden" data-testid="queue-jobs-table">
 				<div class="overflow-x-auto w-full">
 					<table class="w-full text-sm border-collapse whitespace-nowrap">
 						<thead>

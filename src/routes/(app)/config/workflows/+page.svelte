@@ -413,7 +413,7 @@ their arrows so the canvas stays readable.
 		{/snippet}
 
 		<AdminCard
-			class="grid grid-cols-1 gap-4 border border-surface-500/30 bg-white p-4 shadow-sm sm:grid-cols-2 lg:grid-cols-3 dark:border-surface-500/40 dark:bg-surface-900"
+			class="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3"
 			data-testid="workflow-toolbar"
 		>
 			<div data-testid="workflow-collection-select">
@@ -623,9 +623,7 @@ their arrows so the canvas stays readable.
 			</div>
 
 			<!-- Properties Inspector -->
-			<AdminCard
-				class="overflow-y-auto border border-surface-500/30 bg-white p-6 shadow-sm dark:border-surface-500/40 dark:bg-surface-900"
-			>
+			<AdminCard class="overflow-y-auto p-6">
 				<h3 class="mb-6 text-xs font-bold uppercase tracking-widest opacity-40">
 					{workflows_properties()}
 				</h3>

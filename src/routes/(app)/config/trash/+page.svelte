@@ -103,18 +103,22 @@
 		{:else if trashedItems.length === 0}
 			<div in:adminFade={{ delay: 100 }}>
 				<AdminCard
-					class="p-12 text-center border-dashed border-2 shadow-xs"
+					class="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center"
 					data-testid="trash-empty"
 				>
-					<iconify-icon icon="mdi:trash-can-outline" width="64" class="mx-auto mb-4 opacity-20"
+					<iconify-icon icon="mdi:trash-can-outline" width="48" class="text-(--admin-text-muted)"
 					></iconify-icon>
-					<h3 class="text-xl font-semibold">{trash_empty_title()}</h3>
-					<p class="text-surface-500">{trash_empty_description()}</p>
+					<div class="space-y-1">
+						<h3 class="text-base font-semibold">{trash_empty_title()}</h3>
+						<p class="mx-auto max-w-md text-sm text-(--admin-text-muted)">
+							{trash_empty_description()}
+						</p>
+					</div>
 				</AdminCard>
 			</div>
 		{:else}
 			<div in:adminFade={{ delay: 100 }}>
-				<AdminCard class="p-6 shadow-xs" data-testid="trash-table">
+				<AdminCard class="p-6" data-testid="trash-table">
 					<div class="overflow-x-auto w-full">
 						<table class="w-full text-sm border-collapse">
 							<thead>

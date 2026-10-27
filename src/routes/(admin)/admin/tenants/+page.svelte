@@ -71,9 +71,7 @@
 		>
 	{/snippet}
 
-	<AdminCard
-		class="overflow-hidden border border-surface-500/30 bg-white p-0 shadow-xs backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/20"
-	>
+	<AdminCard class="overflow-hidden p-0">
 		<div class="{SMART_TABLE_SCROLL} w-full">
 			<table class={SMART_TABLE}>
 				<thead class={SMART_TABLE_THEAD}>

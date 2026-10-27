@@ -200,9 +200,7 @@ Allows synchronization between filesystem and database, safety mode selection, a
 	backUrl="/config"
 >
 	<div data-testid="sync-page" class="contents">
-		<AdminCard
-			class="p-6 border border-(--admin-border-default) bg-(--admin-bg-card,var(--color-surface-50)) dark:bg-surface-900/20 backdrop-blur-md shadow-xs"
-		>
+		<AdminCard class="p-6">
 			<div class="mb-4 rounded-md border border-surface-500/20 bg-surface-500/10 p-4">
 				<p class="text-surface-600 dark:text-surface-400 text-sm">
 					{sync_intro_part1()}{' '}<strong>{sync_schema_code()}</strong>{sync_intro_part2()}
@@ -380,7 +378,7 @@ Allows synchronization between filesystem and database, safety mode selection, a
 								</p>
 							</div>
 
-							<AdminCard class="overflow-x-auto w-full border border-(--admin-border-default)">
+							<AdminCard class="overflow-x-auto w-full">
 								<table class="w-full text-sm border-collapse">
 									<thead>
 										<tr

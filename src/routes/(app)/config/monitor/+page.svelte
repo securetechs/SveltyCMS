@@ -118,10 +118,7 @@
 		<!-- Stats Grid -->
 		<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4" data-testid="monitor-stats">
 			<!-- Security Card -->
-			<AdminCard
-				class="space-y-4 border border-surface-500/30 bg-white p-6 shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
-				data-testid="monitor-card-security"
-			>
+			<AdminCard class="space-y-4 p-6" data-testid="monitor-card-security">
 				<div class="flex items-center justify-between">
 					<div class="rounded bg-tertiary-500 p-2 dark:bg-primary-500/10">
 						<iconify-icon
@@ -152,10 +149,7 @@
 			</AdminCard>
 
 			<!-- System State Card -->
-			<AdminCard
-				class="space-y-4 border border-surface-500/30 bg-white p-6 shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
-				data-testid="monitor-card-system"
-			>
+			<AdminCard class="space-y-4 p-6" data-testid="monitor-card-system">
 				<div class="flex items-center justify-between">
 					<div class="rounded bg-tertiary-500/10 p-2">
 						<iconify-icon icon="mdi:server-network" class="text-2xl text-tertiary-500"
@@ -186,10 +180,7 @@
 			</AdminCard>
 
 			<!-- API Traffic Card -->
-			<AdminCard
-				class="space-y-4 border border-surface-500/30 bg-white p-6 shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
-				data-testid="monitor-card-requests"
-			>
+			<AdminCard class="space-y-4 p-6" data-testid="monitor-card-requests">
 				<div class="flex items-center justify-between">
 					<div class="rounded bg-tertiary-500/10 p-2">
 						<iconify-icon icon="mdi:chart-line" class="text-2xl text-tertiary-500"></iconify-icon>
@@ -220,10 +211,7 @@
 			</AdminCard>
 
 			<!-- Quick Actions Card -->
-			<AdminCard
-				class="space-y-4 border border-surface-500/30 bg-white p-6 shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
-				data-testid="monitor-card-actions"
-			>
+			<AdminCard class="space-y-4 p-6" data-testid="monitor-card-actions">
 				<div class="flex items-center justify-between">
 					<div class="rounded bg-tertiary-500/10 p-2">
 						<iconify-icon icon="mdi:lightning-bolt" class="text-2xl text-tertiary-500"
@@ -267,10 +255,7 @@
 		</div>
 
 		<!-- Service Health Table -->
-		<AdminCard
-			class="border border-surface-500/30 bg-white p-6 shadow-sm dark:border-surface-500/40 dark:bg-surface-900"
-			data-testid="monitor-service-health"
-		>
+		<AdminCard class="p-6" data-testid="monitor-service-health">
 			<h2 class="mb-4 text-lg font-bold">{monitor_service_health()}</h2>
 			{#if systemState?.services?.length > 0}
 				<div class="overflow-x-auto">
@@ -332,9 +317,7 @@
 
 		<!-- Security Feed & Webhooks Sidebar -->
 		<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
-			<AdminCard
-				class="border border-surface-500/30 bg-white p-6 shadow-sm lg:col-span-2 dark:border-surface-500/40 dark:bg-surface-900"
-			>
+			<AdminCard class="p-6 lg:col-span-2">
 				<div class="mb-6 flex items-center justify-between">
 					<h2 class="text-lg font-bold">{monitor_security_feed()}</h2>
 					<Button variant="ghost" size="sm">{monitor_view_all_logs()}</Button>
@@ -365,9 +348,7 @@
 			</AdminCard>
 
 			<div class="space-y-6">
-				<AdminCard
-					class="border border-surface-500/30 bg-white p-6 shadow-sm dark:border-surface-500/40 dark:bg-surface-900"
-				>
+				<AdminCard class="p-6">
 					<h2 class="mb-4 text-lg font-bold">{monitor_webhook_status()}</h2>
 					<div class="space-y-4">
 						<div class="flex items-center justify-between text-sm">
@@ -394,9 +375,7 @@
 		</div>
 
 		<!-- Cryptographic Audit Logs -->
-		<AdminCard
-			class="border border-surface-500/30 bg-white p-6 shadow-sm dark:border-surface-500/40 dark:bg-surface-900"
-		>
+		<AdminCard class="p-6">
 			<div class="mb-6 flex items-center justify-between">
 				<div>
 					<h2 class="text-lg font-bold">{monitor_audit_trail()}</h2>

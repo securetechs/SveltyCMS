@@ -239,9 +239,7 @@ Reference route for Testing 2026 ADR: thin UI over webhooks-api + webhooks-utils
 
 	<div data-testid="webhooks-page" class="contents">
 		{#if isLoading}
-			<AdminCard
-				class="p-6 border border-(--admin-border-default) bg-(--admin-bg-card) backdrop-blur-md shadow-xs"
-			>
+			<AdminCard class="p-6">
 				<div class="flex flex-col items-center justify-center py-20" data-testid="webhooks-loading">
 					<Loader variant="text" lines={2} lastLineWidth="50%" ariaLabel="Loading webhooks" />
 				</div>
@@ -263,14 +261,20 @@ Reference route for Testing 2026 ADR: thin UI over webhooks-api + webhooks-utils
 			{#if webhooks.length === 0}
 				<div in:fade>
 					<AdminCard
-						class="p-12 text-center border-2 border-dashed border-(--admin-border-default) bg-(--admin-bg-card) backdrop-blur-md shadow-xs"
+						class="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center"
 						data-testid="webhooks-empty"
 					>
-						<iconify-icon icon="mdi:webhook-off" class="text-6xl mb-4 opacity-20"></iconify-icon>
-						<h3 class="h3 font-bold">{webhooks_empty_title()}</h3>
-						<p class="mb-6 opacity-60">{webhooks_empty_intro()}</p>
+						<iconify-icon icon="mdi:webhook" width="48" class="text-(--admin-text-muted)"
+						></iconify-icon>
+						<div class="space-y-1">
+							<h3 class="text-base font-semibold">{webhooks_empty_title()}</h3>
+							<p class="mx-auto max-w-md text-sm text-(--admin-text-muted)">
+								{webhooks_empty_intro()}
+							</p>
+						</div>
 						<Button
-							variant="tertiary"
+							variant="primary"
+							leadingIcon="mdi:plus"
 							onclick={openAddModal}
 							aria-label={webhooks_add_aria()}
 							data-testid="webhooks-empty-cta"
@@ -285,14 +289,11 @@ Reference route for Testing 2026 ADR: thin UI over webhooks-api + webhooks-utils
 				</AdminCard>
 			{:else}
 				<div in:fade>
-					<AdminCard
-						class="p-6 border border-(--admin-border-default) bg-(--admin-bg-card) backdrop-blur-md shadow-xs space-y-4"
-						data-testid="webhooks-list"
-					>
+					<AdminCard class="p-6 space-y-4" data-testid="webhooks-list">
 						<div class="grid gap-4">
 							{#each filteredWebhooks as webhook (webhook.id)}
 								<AdminCard
-									class="p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 hover:border-tertiary-500 dark:hover:border-primary-500 transition-colors"
+									class="p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-colors"
 									data-testid={`webhook-card-${webhook.id}`}
 									data-webhook-name={webhook.name}
 								>
@@ -373,7 +374,7 @@ Reference route for Testing 2026 ADR: thin UI over webhooks-api + webhooks-utils
 	>
 		<div transition:slide class="w-full max-w-2xl">
 			<AdminCard
-				class="bg-surface-500/10 dark:bg-surface-800 w-full overflow-hidden shadow-2xl border border-(--admin-border-default)"
+				class="w-full overflow-hidden"
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby="webhook-modal-title"

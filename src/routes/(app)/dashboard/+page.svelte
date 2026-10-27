@@ -959,33 +959,28 @@
 						{/each}
 					</div>
 				{:else}
-					<div
-						class="mx-auto flex h-[60vh] w-full flex-col items-center justify-center text-center"
-						data-testid="dashboard-empty-state"
-					>
-						<div class="flex flex-col items-center px-10 py-12">
-							<iconify-icon
-								icon="mdi:view-dashboard"
-								width={80}
-								class="mb-6 text-tertiary-500 drop-shadow-lg dark:text-primary-500"
+					<div class="w-full px-2" data-testid="dashboard-empty-state">
+						<AdminCard
+							class="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center"
+						>
+							<iconify-icon icon="mdi:view-dashboard" width="48" class="text-(--admin-text-muted)"
 							></iconify-icon>
-							<p class="mb-2 text-2xl font-bold text-tertiary-500 dark:text-primary-500">
-								{dashboard_empty_title()}
-							</p>
-							<p class="mb-6 text-base text-(--admin-text-muted)">
-								{dashboard_empty_desc()}
-							</p>
+							<div class="space-y-1">
+								<h3 class="text-base font-semibold">{dashboard_empty_title()}</h3>
+								<p class="mx-auto max-w-md text-sm text-(--admin-text-muted)">
+									{dashboard_empty_desc()}
+								</p>
+							</div>
 							<Button
-								variant="outline"
+								variant="primary"
 								onclick={() => (dropdownOpen = true)}
 								aria-label={dashboard_add_first_widget()}
 								data-testid="dashboard-add-first-widget"
-								class="rounded-full bg-tertiary-500 px-6 py-3 text-lg font-semibold text-white shadow-lg dark:bg-primary-500"
 							>
-								<iconify-icon icon="mdi:plus" width={22} class="me-2"></iconify-icon>
+								<iconify-icon icon="mdi:plus" width="18"></iconify-icon>
 								{dashboard_add_widget()}
 							</Button>
-						</div>
+						</AdminCard>
 					</div>
 				{/if}
 

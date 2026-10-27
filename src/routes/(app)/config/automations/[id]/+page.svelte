@@ -423,7 +423,7 @@ and preview/test functionality. Reuses TokenPicker patterns.
 >
 	{#if isLoading}
 		<AdminCard
-			class="flex items-center justify-center border border-surface-500/30 py-20 dark:border-surface-500/40"
+			class="flex items-center justify-center py-20"
 			data-testid="automation-editor-loading"
 		>
 			<Loader variant="circle" width="size-12" height="size-12" ariaLabel="Loading automation" />
@@ -465,9 +465,7 @@ and preview/test functionality. Reuses TokenPicker patterns.
 			</div>
 
 			<!-- Step Content -->
-			<AdminCard
-				class="overflow-hidden border border-surface-500/30 bg-white dark:border-surface-500/40 dark:bg-surface-900/50"
-			>
+			<AdminCard class="overflow-hidden">
 				<!-- STEP 1: Trigger -->
 				{#if activeStep === 1}
 					<div class="p-6 space-y-6" transition:fade>
@@ -1064,7 +1062,7 @@ and preview/test functionality. Reuses TokenPicker patterns.
 						</h3>
 
 						<!-- Flow Summary -->
-						<AdminCard class="border border-surface-500/20 bg-surface-500/10 p-4 rounded space-y-3">
+						<AdminCard class="p-4 space-y-3">
 							<div class="flex items-center justify-between">
 								<h4 class="font-bold text-lg">{flow.name || 'Untitled'}</h4>
 								{#if flow.active}

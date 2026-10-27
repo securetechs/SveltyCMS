@@ -242,9 +242,7 @@ Lists all configured workflow automations with status, trigger, and operation su
 
 	<div data-testid="automations-page" class="contents">
 		<!-- Search & Bulk Actions -->
-		<AdminCard
-			class="space-y-4 border border-surface-500/30 bg-white p-6 shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
-		>
+		<AdminCard class="space-y-4 p-6">
 			<div class="flex flex-col md:flex-row items-center gap-4">
 				<div class="relative flex-1 w-full">
 					<iconify-icon
@@ -320,10 +318,7 @@ Lists all configured workflow automations with status, trigger, and operation su
 		</AdminCard>
 
 		{#if isLoading}
-			<AdminCard
-				class="border border-surface-500/30 bg-white p-6 shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
-				data-testid="automations-loading"
-			>
+			<AdminCard class="p-6" data-testid="automations-loading">
 				<div class="flex flex-col items-center justify-center gap-4 py-20 grayscale opacity-50">
 					<Loader
 						variant="circle"
@@ -336,20 +331,20 @@ Lists all configured workflow automations with status, trigger, and operation su
 			</AdminCard>
 		{:else if flows.length === 0}
 			<AdminCard
-				class="border-2 border-dashed border-surface-500/30 bg-white p-12 text-center shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
+				class="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center"
 				data-testid="automations-empty"
 			>
-				<iconify-icon
-					icon="mdi:robot-off-outline"
-					width="64"
-					height="64"
-					class="text-tertiary-500 dark:text-primary-500"
+				<iconify-icon icon="mdi:robot-off-outline" width="48" class="text-(--admin-text-muted)"
 				></iconify-icon>
-				<h3 class="h3 font-bold">{automations_empty_title()}</h3>
-				<p class="mb-2 opacity-60">{automations_empty_intro()}</p>
-				<p class="mb-6 text-sm opacity-40">
-					{automations_empty_example()}
-				</p>
+				<div class="space-y-1">
+					<h3 class="text-base font-semibold">{automations_empty_title()}</h3>
+					<p class="mx-auto max-w-md text-sm text-(--admin-text-muted)">
+						{automations_empty_intro()}
+					</p>
+					<p class="mx-auto max-w-md text-xs text-(--admin-text-muted)">
+						{automations_empty_example()}
+					</p>
+				</div>
 				<Button
 					variant="primary"
 					href="/config/automations/new"
@@ -362,10 +357,7 @@ Lists all configured workflow automations with status, trigger, and operation su
 				</Button>
 			</AdminCard>
 		{:else}
-			<AdminCard
-				class="space-y-4 border border-surface-500/30 bg-white p-6 shadow-sm backdrop-blur-md dark:border-surface-500/40 dark:bg-surface-900/50"
-				data-testid="automations-list"
-			>
+			<AdminCard class="space-y-4 p-6" data-testid="automations-list">
 				<div class="grid gap-4">
 					{#each filteredFlows as flow (flow.id)}
 						<div
@@ -374,9 +366,7 @@ Lists all configured workflow automations with status, trigger, and operation su
 							data-testid={`automation-card-${flow.id}`}
 							data-automation-name={flow.name}
 						>
-							<AdminCard
-								class="flex items-center gap-4 border border-surface-500/30 bg-surface-500/10 p-4 transition-all duration-200 hover:border-tertiary-500 dark:border-primary-600 dark:bg-surface-800"
-							>
+							<AdminCard class="flex items-center gap-4 p-4 transition-all duration-200">
 								<!-- Checkbox -->
 								<div class="shrink-0">
 									<Checkbox

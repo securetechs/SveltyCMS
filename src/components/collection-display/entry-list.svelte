@@ -46,6 +46,7 @@ bulk actions, and predictive preloading.
 -->
 
 <script module lang="ts">
+	import AdminCard from '@components/admin-card.svelte';
 	import Button from '@components/ui/button.svelte';
 	import { contentLanguage, systemLanguage } from '@src/stores/locale-store.svelte';
 	export type SortOrder = 0 | 1 | -1; // Strict type for sort order
@@ -2016,13 +2017,16 @@ bulk actions, and predictive preloading.
 			{/if}
 		</SmartTableShell>
 	{:else}
-		<div class="py-10 text-center text-tertiary-500 dark:text-primary-500">
-			<iconify-icon icon="bi:exclamation-circle-fill" width={24} class="mb-2"></iconify-icon>
-			<p class="text-lg">
-				{currentCollection?.name
-					? EntryList_no_collection({ name: currentCollection.name })
-					: 'No collection selected or collection is empty.'}
-			</p>
+		<div class={CONTENT_PADDING}>
+			<AdminCard class="flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
+				<iconify-icon icon="mdi:database-off-outline" width="48" class="text-(--admin-text-muted)"
+				></iconify-icon>
+				<h3 class="text-base font-semibold">
+					{currentCollection?.name
+						? EntryList_no_collection({ name: currentCollection.name })
+						: 'No collection selected or collection is empty.'}
+				</h3>
+			</AdminCard>
 		</div>
 	{/if}
 {/if}
